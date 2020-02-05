@@ -1,0 +1,2 @@
+include ':app', ':Plugin', ':myplugin', ':create-activity-plugin'
+rootProject.name='GradlePlugin'

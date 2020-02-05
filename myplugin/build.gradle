@@ -1,0 +1,28 @@
+apply plugin: 'java-gradle-plugin'
+apply plugin: 'maven'
+
+//repositories {
+//    // Use jcenter for resolving dependencies.
+//    // You can declare any Maven/Ivy/file repository here.
+//    jcenter()
+//}
+gradlePlugin {
+    // Define the plugin
+    plugins {
+        greeting {
+            id = 'com.bamboo.plugin'
+            implementationClass = 'com.bamboo.myplugin.FireantPlugin'
+        }
+    }
+}
+
+uploadArchives {//当前项目可以发布到本地文件夹中
+    repositories {
+        mavenDeployer {
+            repository(url: uri('./repo'))////定义本地maven仓库的地址
+            pom.groupId = 'com.bamboo.myplugin'  //groupId ，自行定义，一般是包名
+            pom.artifactId = 'bamboo-plugin' //artifactId ，自行定义
+            pom.version = '2.0.0' //version 版本号
+        }
+    }
+}

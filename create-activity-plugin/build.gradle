@@ -1,0 +1,32 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'java-gradle-plugin'
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    compileOnly gradleApi()
+    compileOnly localGroovy()
+}
+
+//gradlePlugin {
+//    plugins {
+//        greeting {
+//            id = 'com.bamboo.create'
+//            implementationClass = 'com.bamboo.create.CreateActivityPlugin'
+//        }
+//    }
+//}
+
+uploadArchives {//当前项目可以发布到本地文件夹中
+    repositories {
+        mavenDeployer {
+            repository(url: uri('./repo'))////定义本地maven仓库的地址
+            pom.groupId = 'com.bamboo.createplugin'  //groupId ，自行定义，一般是包名
+            pom.artifactId = 'create-plugin' //artifactId ，自行定义
+            pom.version = '1.0.0' //version 版本号
+        }
+    }
+}

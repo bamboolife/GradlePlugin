@@ -1,0 +1,71 @@
+apply plugin: 'com.android.application'
+apply plugin: 'bamboo'
+apply plugin: 'changeame'
+apply plugin: 'com.bamboo.plugin'
+//apply plugin: 'com.bamboo.create'
+
+myAndroidInfo {
+    devName = 'fireantzhang'
+    devAge = 18
+}
+//activitySetting {
+//    applicationId = 'com.bamboo.simple'
+//    activityName = 'MyCreateActivity'
+//    packageName = 'com.bamboo.simple'
+//}
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "com.bamboo.simple"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+
+class GreetingPluginExtension {
+    String message = "Hello from GreetingPlugin"
+}
+
+
+class GreetingPlugin implements Plugin<Project> {
+
+    @Override
+    void apply(Project project) {
+
+        def extension = project.extensions.create('greeting', GreetingPluginExtension)
+
+        project.task('hello') {
+            doLast {
+                println extension.message
+            }
+        }
+    }
+}
+
+apply plugin: GreetingPlugin //应用插件，这样插件才能在gradle构建过程中生效。
+
+greeting {
+    message = "11111111111111111"
+}
